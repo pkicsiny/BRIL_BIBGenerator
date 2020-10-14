@@ -1,0 +1,29 @@
+2011-05-23  Seb Viret  <viret@in2p3.fr>
+ 
+       	* Minor modification of the storage directory, not hardcoded in generator.sh anymore
+
+2011-05-23  Seb Viret  <viret@in2p3.fr>
+ 
+       	* Improving the batch scripts, see the wiki for more details:
+	http://sviret.web.cern.ch/sviret/Welcome.php?n=CMS.MIBGen
+
+2011-05-22  Seb Viret  <viret@in2p3.fr>
+ 
+       	* Batch scripts have been modified in order to be independent from GT, 
+	release numbers,... see launch_GEN.sh first lines for usage
+
+2011-05-19  Seb Viret  <viret@in2p3.fr>
+ 
+       	* Update of the batch scripts to fit with the SIMRECO part
+
+2011-05-18  Seb Viret  <viret@in2p3.fr>
+ 
+       	* A new /batch/ directory has been added for massive MC sample production.
+	The only file to work on is launch_GEN.sh.
+
+	* Some bugfixes in FlukaHaloGenerator.cc
+
+2011-05-17  Seb Viret  <viret@in2p3.fr>
+ 
+       	* Adding a first version of the BeamHaloGenerator package, 
+	working with CMSSW 4_1_2_patch1. This version could handle MARS and FLUKA inputs
