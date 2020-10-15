@@ -76,6 +76,7 @@ std::vector<std::string> AsciiInput::readRow()
    
   // Convert the cstring to a string.
   std::string tmpString(m_lineBuffer);
+  //std::cout << m_lineBuffer << std::endl;
  
   // Split the string into substrings.
   return strToStrVec(tmpString);
