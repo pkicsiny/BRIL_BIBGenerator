@@ -78,8 +78,6 @@ void FlukaHaloGenerator::initialize()
 
 int FlukaHaloGenerator::fillEvt(edm::Event *event)
 {
-	std::cout << "Fluka Halo Gen::fillEvt" << std::endl;
-
 	evt = new HepMC::GenEvent(); // The event we will produce
 
 	std::vector<BeamHaloParticle> beamHaloEvent;
@@ -107,6 +105,7 @@ int FlukaHaloGenerator::fillEvt(edm::Event *event)
 	std::unique_ptr<HepMCProduct> CMProduct(new HepMCProduct());
 
 	if (evt) CMProduct->addHepMCData(evt);
+	//event->put(std::move(CMProduct),"unsmeared");
 	event->put(std::move(CMProduct));
 
 	//auto_ptr<GenEventInfoProduct> genEventInfo(new GenEventInfoProduct(evt));

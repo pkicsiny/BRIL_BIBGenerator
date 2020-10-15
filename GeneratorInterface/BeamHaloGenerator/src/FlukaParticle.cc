@@ -89,7 +89,9 @@ void FlukaParticle::clear()
 
 int FlukaParticle::read(std::vector<std::string> *eventAsStringVector) 
 {
-  if(eventAsStringVector->size() != 15) 
+  //if(eventAsStringVector->size() != 15) 
+  //edit GA: in the Ph2 Fluka files the FLUKA run ID is missing,so only 14 columns
+  if(eventAsStringVector->size() != 14) 
   {
     std::cerr << "There are only " << eventAsStringVector->size() 
 	      << " data words.  This event will be null." << std::endl;
@@ -106,15 +108,15 @@ int FlukaParticle::read(std::vector<std::string> *eventAsStringVector)
     std::istringstream inStr((*itr));
     switch (wordNumber) 
     {
-    case 0  : inStr >> m_runId; break;
-    case 1  : inStr >> m_eventId; break;
-    case 2  : inStr >> m_flukaId; break;
-    case 3  : inStr >> m_kineticEnergy; break;
-    case 5  : inStr >> doubleValue; m_positionAtScoringPlane.setX(doubleValue); break;
-    case 6  : inStr >> doubleValue; m_positionAtScoringPlane.setY(doubleValue); break;
-    case 7  : inStr >> doubleValue; m_directionalCosines.setX(doubleValue); break;
-    case 8  : inStr >> doubleValue; m_directionalCosines.setY(doubleValue); break;
-    case 9  : inStr >> m_timeOfFlight; break;
+    //case 0  : inStr >> m_runId; break;
+    case 0  : inStr >> m_eventId; break;
+    case 1  : inStr >> m_flukaId; break;
+    case 4  : inStr >> doubleValue; m_positionAtScoringPlane.setX(doubleValue); break;
+    case 5  : inStr >> doubleValue; m_positionAtScoringPlane.setY(doubleValue); break;
+    case 6  : inStr >> doubleValue; m_directionalCosines.setX(doubleValue); break;
+    case 7  : inStr >> doubleValue; m_directionalCosines.setY(doubleValue); break;
+    case 9  : inStr >> m_kineticEnergy; break;
+    case 10  : inStr >> m_timeOfFlight; break;
     case 13 : inStr >> m_primaryProtonZ; break;
     default : break;
     }

@@ -78,9 +78,11 @@ BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 // Initialization of the run
 //
 
-void BeamHaloProducer::beginRun( Run &run, const EventSetup& es )
+//void BeamHaloProducer::beginRun( Run &run, const EventSetup& es )
+//void BeamHaloProducer::beginRun( Run &run, const EventSetup& es )
+void BeamHaloProducer::beginLuminosityBlock(LuminosityBlock const& lumi, EventSetup const& es) 
 {
-	std::cout << "Beam Halo Producer::beginRun" << std::endl;
+	std::cout << "Beam Halo Producer::beginLuminosityBlock" << std::endl;
 	// Check the input type string we choose which input we will use
 
 	if (m_inputTypeStr == "MARS")
@@ -120,8 +122,19 @@ void BeamHaloProducer::produce(Event & e, const EventSetup & es)
 // Finalization of the run
 //
 
-void BeamHaloProducer::endRun( Run &run, const EventSetup& es )
-{
+//void BeamHaloProducer::endRun( Run &run, const EventSetup& es )
+//{
+	//m_beamHaloGenerator->finalize();
+
+	//// just create an empty product
+	//// to keep the EventContent definitions happy
+	//// later on we might put the info into the run info that this is a PGun
+	//std::unique_ptr<GenRunInfoProduct> genRunInfo( new GenRunInfoProduct() );
+	//run.put( std::move(genRunInfo ));
+//}
+
+void BeamHaloProducer::endRunProduce(edm::Run& run, edm::EventSetup const& es){
+
 	m_beamHaloGenerator->finalize();
 
 	// just create an empty product
@@ -129,8 +142,4 @@ void BeamHaloProducer::endRun( Run &run, const EventSetup& es )
 	// later on we might put the info into the run info that this is a PGun
 	std::unique_ptr<GenRunInfoProduct> genRunInfo( new GenRunInfoProduct() );
 	run.put( std::move(genRunInfo ));
-}
-
-void BeamHaloProducer::endRunProduce(edm::Run&, edm::EventSetup const&){
-
 }

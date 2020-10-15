@@ -19,7 +19,7 @@ class BeamHaloGenerator;
 
 namespace edm
 {
-  class BeamHaloProducer : public edm::one::EDProducer<edm::EndRunProducer> {
+  class BeamHaloProducer : public edm::one::EDProducer<edm::EndRunProducer, edm::one::WatchLuminosityBlocks, edm::one::SharedResources> {
     //class BeamHaloProducer : public EDProducer {
     public:
 
@@ -28,10 +28,12 @@ namespace edm
       /// Destructor
       virtual ~BeamHaloProducer();
 
-      virtual void beginRun(Run & r, const EventSetup & es);
+      //virtual void beginRun(Run & r, const EventSetup & es);
       virtual void produce(Event & e, const EventSetup & es);
-      virtual void endRun(Run & r, const EventSetup & es);
+      //virtual void endRun(Run & r, const EventSetup & es);
       virtual void endRunProduce(edm::Run&, edm::EventSetup const&);
+      void beginLuminosityBlock(LuminosityBlock const&, EventSetup const&) override;
+      void endLuminosityBlock(LuminosityBlock const&, EventSetup const&) override {}
 
       std::string inputFile() const { return m_inputFile; }
       double interfacePlane() const { return m_interfacePlane; }
