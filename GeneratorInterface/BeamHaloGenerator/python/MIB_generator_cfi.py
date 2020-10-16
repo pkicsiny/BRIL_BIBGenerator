@@ -88,7 +88,7 @@ FLUKA_generator = cms.EDProducer("BeamHaloProducer",
     #InputFile = cms.string('beam-halo_3.5TeV-R5'),
     InputFile = cms.string('beam-gas_IR5'),
 
-     generatorSettings = cms.untracked.vstring(
+    generatorSettings = cms.untracked.vstring(
     #    "allowedPdgId 13 -13",  # The PDG IDs of the allowed particles
     "BEAM 1",               # Beam number to generate (DEFAULT is 1)
     "SEED 1",               # Input val for the seed (DEFAULT is 1)    

@@ -261,7 +261,7 @@ int MarsHaloGenerator::fillEvt(edm::Event *event)
   std::unique_ptr<HepMCProduct> CMProduct(new HepMCProduct());
   
   if (evt) CMProduct->addHepMCData(evt);
-  event->put(std::move(CMProduct));
+  event->put(std::move(CMProduct), "unsmeared");
 
   std::unique_ptr<GenEventInfoProduct> genEventInfo(new GenEventInfoProduct(evt));
   event->put(std::move(genEventInfo));

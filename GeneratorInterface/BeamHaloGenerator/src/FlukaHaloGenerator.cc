@@ -99,14 +99,14 @@ int FlukaHaloGenerator::fillEvt(edm::Event *event)
 
 	m_eventNumber++;
 
-	evt->print();
+	//evt->print();
 
 	//std::auto_ptr<HepMCProduct> CMProduct(new HepMCProduct());
 	std::unique_ptr<HepMCProduct> CMProduct(new HepMCProduct());
 
 	if (evt) CMProduct->addHepMCData(evt);
-	//event->put(std::move(CMProduct),"unsmeared");
-	event->put(std::move(CMProduct));
+	event->put(std::move(CMProduct),"unsmeared");
+	//event->put(std::move(CMProduct));
 
 	//auto_ptr<GenEventInfoProduct> genEventInfo(new GenEventInfoProduct(evt));
 	std::unique_ptr<GenEventInfoProduct> genEventInfo(new GenEventInfoProduct(evt));

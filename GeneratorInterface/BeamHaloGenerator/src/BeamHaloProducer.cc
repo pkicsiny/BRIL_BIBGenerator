@@ -65,7 +65,7 @@ BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 	for(auto setting : m_generatorSettings)
 		std::cout <<setting << std::endl;
 
-	produces<HepMCProduct>();
+	produces<HepMCProduct>("unsmeared");
 	produces<GenEventInfoProduct>();
 	//produces<GenRunInfoProduct, InRun>();
 	produces<GenRunInfoProduct, edm::Transition::EndRun>();
