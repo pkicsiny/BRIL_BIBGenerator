@@ -61,13 +61,10 @@ BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 
 	cout << "We will use " << m_inputTypeStr << " input ... " << endl;
 	cout << "with " << m_inputFile << " datafile ... " << endl;
-	cout << "and settings:" <<std::endl;
-	for(auto setting : m_generatorSettings)
-		std::cout <<setting << std::endl;
+	//m_generatorSettings
 
 	produces<HepMCProduct>("unsmeared");
 	produces<GenEventInfoProduct>();
-	//produces<GenRunInfoProduct, InRun>();
 	produces<GenRunInfoProduct, edm::Transition::EndRun>();
 
 	cout << "BeamHaloProducer constructor finished" << endl;
@@ -121,17 +118,6 @@ void BeamHaloProducer::produce(Event & e, const EventSetup & es)
 //
 // Finalization of the run
 //
-
-//void BeamHaloProducer::endRun( Run &run, const EventSetup& es )
-//{
-	//m_beamHaloGenerator->finalize();
-
-	//// just create an empty product
-	//// to keep the EventContent definitions happy
-	//// later on we might put the info into the run info that this is a PGun
-	//std::unique_ptr<GenRunInfoProduct> genRunInfo( new GenRunInfoProduct() );
-	//run.put( std::move(genRunInfo ));
-//}
 
 void BeamHaloProducer::endRunProduce(edm::Run& run, edm::EventSetup const& es){
 

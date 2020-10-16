@@ -67,7 +67,6 @@ BeamHaloGenerator::BeamHaloGenerator(edm::BeamHaloProducer *mainAlg, const edm::
 	setup->get<PDTRecord>().get(m_particleTable);
 
 	bookNtuple();
-	std::cout << "BHGenerator Constructor" << std::endl;
 }
 
 
