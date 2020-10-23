@@ -49,10 +49,12 @@ BeamHaloGenerator::BeamHaloGenerator(edm::BeamHaloProducer *mainAlg, const edm::
 	m_interfacePlane(0.),
 	m_flipProbability(0.),
 	m_flipEventEnabled(false),
-	m_inputFile("null"),
+	//m_inputFile("null"),	
+	m_inputFiles({"null"}),
 	m_binaryBufferFile("null.bin"),
 	m_engine(0),
-	m_asciiInput(0),
+	//m_asciiInput(0),
+	m_asciiInputs(0),
 	m_BHG_settings(0),
 	m_eventNumber(0),
 	m_nRead(0),
@@ -62,8 +64,11 @@ BeamHaloGenerator::BeamHaloGenerator(edm::BeamHaloProducer *mainAlg, const edm::
 	m_wAfterCuts(0.),
 	m_wGenerated(0.)
 {
-	// -- some initialisations
 
+	//debug
+	std::cout << "BeamHaloGenerator::constructor" << std::endl;	
+
+	// -- some initialisations
 	setup->get<PDTRecord>().get(m_particleTable);
 
 	bookNtuple();
@@ -76,12 +81,17 @@ BeamHaloGenerator::BeamHaloGenerator(edm::BeamHaloProducer *mainAlg, const edm::
 
 void BeamHaloGenerator::initialize()
 {
-	m_inputFile         = m_mainAlg->inputFile();
+	//debug
+	std::cout << "BeamHaloGenerator::initialize" << std::endl;
+
+        //m_inputFile         = m_mainAlg->inputFile();
+	m_inputFiles        = m_mainAlg->inputFiles();
 	m_interfacePlane    = m_mainAlg->interfacePlane();
 	m_flipProbability   = m_mainAlg->flipProbability();
 	m_flipEventEnabled  = m_mainAlg->flipEventEnabled();
 	m_binaryBufferFile  = m_mainAlg->binaryBufferFile();
-	m_asciiInput        = new AsciiInput(m_inputFile);
+	//m_asciiInput        = new AsciiInput(m_inputFile);
+        m_asciiInputs     = new AsciiInput(m_inputFiles);
 	m_BHG_settings      = new BeamHaloGeneratorSettings(m_mainAlg->generatorSettings());
 	m_BHG_settings->parseSettings();
 
@@ -100,6 +110,9 @@ void BeamHaloGenerator::initialize()
 
 void BeamHaloGenerator::finalize()
 {
+	//endl
+	std::cout << "BeamHaloGenerator::finalize" << std::endl;
+
 	m_rootFile->Write();
 	m_rootFile->Close();
 }
@@ -118,6 +131,9 @@ int BeamHaloGenerator::convertEvent(std::vector<BeamHaloParticle>* beamHaloEvent
 		HepMC::GenEvent* evt,
 		edm::Event* event)
 {
+	//debug
+	std::cout << "BeamHaloGenerator::convertEvent" << std::endl;
+
 	// Seed for randomnumbers
 	edm::Service<edm::RandomNumberGenerator> rng;
 	m_engine  = &(rng->getEngine(event->streamID()));
@@ -202,6 +218,9 @@ int BeamHaloGenerator::convertEvent(std::vector<BeamHaloParticle>* beamHaloEvent
 
 bool BeamHaloGenerator::flipEvent()
 {
+	//debug
+	std::cout << "BeamHaloGenerator::flipEvent" << std::endl;
+
 	if(!m_flipEventEnabled) return false;
 
 	// Check to see if the event should be flipped or not
@@ -217,6 +236,9 @@ bool BeamHaloGenerator::flipEvent()
 
 bool BeamHaloGenerator::bookNtuple()
 {
+	//debug
+	std::cout << "BeamHaloGenerator::bookNtuple" << std::endl;
+
 	std::string filename = "HALO_report_";
 	std::stringstream out;
 	out << m_seed;

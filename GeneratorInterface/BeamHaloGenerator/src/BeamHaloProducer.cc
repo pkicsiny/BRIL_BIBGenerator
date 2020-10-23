@@ -45,7 +45,8 @@ BeamHaloProducer::~BeamHaloProducer()
 
 BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 	m_inputTypeStr (pset.getParameter<std::string>("InputType")),
-	m_inputFile    (pset.getParameter<std::string>("InputFile")),
+	//m_inputFiles    (pset.getParameter<std::string>("InputFile")),
+        m_inputFiles    (pset.getParameter<std::vector<std::string>>("FlukaFiles")),
 	m_interfacePlane(22600.),
 	m_flipProbability(0.5),
 	m_flipEventEnabled(false),
@@ -53,21 +54,28 @@ BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 	m_binaryBufferFile("BinaryBuffer.bin"),
 	m_beamHaloGenerator(0)
 {
+	
+	//debug
+	std::cout << "BeamHaloProducer::constructor" << std::endl;
 
 	// Read the input configuration information
 	m_generatorSettings = pset.getUntrackedParameter<std::vector<std::string> >("generatorSettings");
 
-	cout << "BeamHaloProducer: starting event generation ... " << endl;
+	std::cout << "BeamHaloProducer: starting event generation ... " << std::endl;
 
-	cout << "We will use " << m_inputTypeStr << " input ... " << endl;
-	cout << "with " << m_inputFile << " datafile ... " << endl;
+	//cout << "We will use " << m_inputTypeStr << " input ... " << endl;
+	for(auto fileIt = m_inputFiles.begin(); fileIt != m_inputFiles.end(); ++fileIt){
+        	std::cout << "with " << *fileIt << " datafile ... " << std::endl;
+	}
+	//cout << "with " << m_inputFile << " datafile ... " << endl;
+	
 	//m_generatorSettings
 
 	produces<HepMCProduct>("unsmeared");
 	produces<GenEventInfoProduct>();
 	produces<GenRunInfoProduct, edm::Transition::EndRun>();
 
-	cout << "BeamHaloProducer constructor finished" << endl;
+	std::cout << "BeamHaloProducer constructor finished." << std::endl;
 }
 
 
@@ -79,7 +87,7 @@ BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 //void BeamHaloProducer::beginRun( Run &run, const EventSetup& es )
 void BeamHaloProducer::beginLuminosityBlock(LuminosityBlock const& lumi, EventSetup const& es) 
 {
-	std::cout << "Beam Halo Producer::beginLuminosityBlock" << std::endl;
+	std::cout << "Debug info:BeamHaloProducer::beginLuminosityBlock" << std::endl;
 	// Check the input type string we choose which input we will use
 
 	if (m_inputTypeStr == "MARS")
@@ -110,6 +118,8 @@ void BeamHaloProducer::beginLuminosityBlock(LuminosityBlock const& lumi, EventSe
 
 void BeamHaloProducer::produce(Event & e, const EventSetup & es)
 {
+	//debug
+	std::cout << "BeamHaloProducer::produce" << std::endl;
 	m_beamHaloGenerator->fillEvt(&e);
 }
 
@@ -120,6 +130,9 @@ void BeamHaloProducer::produce(Event & e, const EventSetup & es)
 //
 
 void BeamHaloProducer::endRunProduce(edm::Run& run, edm::EventSetup const& es){
+	
+	//debug
+	std::cout << "BeamHaloProducer::endRunProduce" << std::endl;
 
 	m_beamHaloGenerator->finalize();
 

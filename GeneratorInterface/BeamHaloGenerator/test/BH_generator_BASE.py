@@ -71,7 +71,7 @@ process.load('GeneratorInterface.BeamHaloGenerator.MIB_generator_cff')
 
 process.generator = process.MYGENNAME_generator  # FLUKA OR MARS
 
-process.generator.InputFile = cms.string('MYFNAME')
+process.generator.InputFiles = cms.vstring('MYFNAME')
 
 process.generator.generatorSettings = cms.untracked.vstring(
     #ONLYMU"allowedPdgId 13 -13",  # The PDG IDs of the allowed particles

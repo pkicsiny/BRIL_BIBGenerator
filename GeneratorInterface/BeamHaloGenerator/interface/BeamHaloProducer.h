@@ -22,7 +22,6 @@ namespace edm
   class BeamHaloProducer : public edm::one::EDProducer<edm::EndRunProducer, edm::one::WatchLuminosityBlocks, edm::one::SharedResources> {
     //class BeamHaloProducer : public EDProducer {
     public:
-
       /// Constructor
       BeamHaloProducer(const ParameterSet &);
       /// Destructor
@@ -35,7 +34,8 @@ namespace edm
       void beginLuminosityBlock(LuminosityBlock const&, EventSetup const&) override;
       void endLuminosityBlock(LuminosityBlock const&, EventSetup const&) override {}
 
-      std::string inputFile() const { return m_inputFile; }
+      //std::string inputFile() const { return m_inputFile; }
+      std::vector<std::string> inputFiles() const { return m_inputFiles; }
       double interfacePlane() const { return m_interfacePlane; }
       float flipProbability() const { return m_flipProbability; }
       bool flipEventEnabled() const { return m_flipEventEnabled; }
@@ -49,7 +49,8 @@ namespace edm
       std::string m_inputTypeStr;
 
       /** Input file name */
-      std::string m_inputFile;
+      //std::string m_inputFiles;
+      std::vector<std::string> m_inputFiles;
 
       /** The position of the interface plane in mm. */
       double m_interfacePlane;
