@@ -40,7 +40,7 @@ AsciiInput::~AsciiInput()
 int AsciiInput::open() 
 {
   //debug
-  std::cout << "AsciiInput::open()" << std::endl;
+  //std::cout << "AsciiInput::open()" << std::endl;
 
   m_file.open(m_fileName.c_str());
   if(!m_file) 
@@ -57,7 +57,7 @@ int AsciiInput::open()
 int AsciiInput::open(int idx)
 {
   //debug
-  std::cout << "AsciiInput::open(" << idx << ")" << std::endl;
+  //std::cout << "AsciiInput::open(" << idx << ")" << std::endl;
 
   // Sanity check
   if(!(idx >= 0 and idx < static_cast<int>(m_fileNames.size()))){
@@ -76,7 +76,7 @@ int AsciiInput::open(int idx)
 int AsciiInput::close()
 {
   //debug
-  std::cout << "AsciiInput::close" << std::endl;
+  //std::cout << "AsciiInput::close" << std::endl;
 
   if(m_file.is_open())
   {
@@ -91,7 +91,7 @@ std::tuple<std::vector<std::string>, bool> AsciiInput::readRow()
 {
   
   //debug
-  std::cout << "AsciiInput::readrow" << std::endl;
+  //std::cout << "AsciiInput::readrow" << std::endl;
  
   std::vector<std::string> row;
 

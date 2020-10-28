@@ -38,7 +38,7 @@ int BeamHaloGeneratorSettings::parseSettings()
 {
   
   //debug
-  std::cout << "BeamHaloGeneratorSettings::parseSettings" << std::endl;
+  //std::cout << "BeamHaloGeneratorSettings::parseSettings" << std::endl;
 
   std::vector<std::string> strVector;
   std::vector<std::string>::iterator row_itr;
@@ -179,7 +179,7 @@ int BeamHaloGeneratorSettings::parseLimitSetting(std::vector<std::string> *comma
 bool BeamHaloGeneratorSettings::checkParticle(BeamHaloParticle *beamHaloParticle) 
 {
   //debug
-  std::cout << "BeamHaloGeneratorSettings::checkParticle" << std::endl;
+  //std::cout << "BeamHaloGeneratorSettings::checkParticle" << std::endl;
 
   if(!m_settingsParsed) // The parsing hasn't been done yet
   {
@@ -248,7 +248,7 @@ void BeamHaloGeneratorSettings::printSettings()
 {
 
   //debug
-  std::cout << "BeamHaloGeneratorSettings::printSettings" << std::endl;
+  //std::cout << "BeamHaloGeneratorSettings::printSettings" << std::endl;
 
   std::cout << "##################################################" << std::endl;
 

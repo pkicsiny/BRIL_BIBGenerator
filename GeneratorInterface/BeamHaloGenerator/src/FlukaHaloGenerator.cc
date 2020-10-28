@@ -45,7 +45,7 @@ FlukaHaloGenerator::FlukaHaloGenerator(edm::BeamHaloProducer *mainAlg, const edm
 	m_lastFlukaParticle()
 {
 	//debug
-	std::cout << "FlukaHaloGenerator::constructor" << std::endl;
+	//std::cout << "FlukaHaloGenerator::constructor" << std::endl;
 	std::cout << "FlukaHaloGenerator: starting event generation ... " << std::endl;
 }
 
@@ -58,7 +58,7 @@ FlukaHaloGenerator::FlukaHaloGenerator(edm::BeamHaloProducer *mainAlg, const edm
 void FlukaHaloGenerator::initialize()
 {
 	//debug
-	std::cout << "FlukaHaloGenerator::initialize" << std::endl;
+	//std::cout << "FlukaHaloGenerator::initialize" << std::endl;
 	
 	BeamHaloGenerator::initialize();
 
@@ -134,7 +134,7 @@ int FlukaHaloGenerator::fillEvt(edm::Event *event)
 void FlukaHaloGenerator::finalize()
 {
 	//debug
-	std::cout << "FlukaHaloGenerator::finalize" << std::endl;
+	//std::cout << "FlukaHaloGenerator::finalize" << std::endl;
 
 	BeamHaloGenerator::finalize();
 	
@@ -182,7 +182,7 @@ void FlukaHaloGenerator::finalize()
 int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 {
 	//debug
-	std::cout << "FlukaHaloGenerator::readEvent" << std::endl;
+	//std::cout << "FlukaHaloGenerator::readEvent" << std::endl;
 
 	BeamHaloParticle beamHaloParticle;
 	const HepPDT::ParticleData* particleData;

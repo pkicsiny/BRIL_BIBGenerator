@@ -56,7 +56,7 @@ BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 {
 	
 	//debug
-	std::cout << "BeamHaloProducer::constructor" << std::endl;
+	//std::cout << "BeamHaloProducer::constructor" << std::endl;
 
 	// Read the input configuration information
 	m_generatorSettings = pset.getUntrackedParameter<std::vector<std::string> >("generatorSettings");
@@ -119,7 +119,7 @@ void BeamHaloProducer::beginLuminosityBlock(LuminosityBlock const& lumi, EventSe
 void BeamHaloProducer::produce(Event & e, const EventSetup & es)
 {
 	//debug
-	std::cout << "BeamHaloProducer::produce" << std::endl;
+	//std::cout << "BeamHaloProducer::produce" << std::endl;
 	m_beamHaloGenerator->fillEvt(&e);
 }
 
@@ -132,7 +132,7 @@ void BeamHaloProducer::produce(Event & e, const EventSetup & es)
 void BeamHaloProducer::endRunProduce(edm::Run& run, edm::EventSetup const& es){
 	
 	//debug
-	std::cout << "BeamHaloProducer::endRunProduce" << std::endl;
+	//std::cout << "BeamHaloProducer::endRunProduce" << std::endl;
 
 	m_beamHaloGenerator->finalize();
 
