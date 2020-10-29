@@ -87,7 +87,7 @@ BeamHaloProducer::BeamHaloProducer( const ParameterSet & pset) :
 //void BeamHaloProducer::beginRun( Run &run, const EventSetup& es )
 void BeamHaloProducer::beginLuminosityBlock(LuminosityBlock const& lumi, EventSetup const& es) 
 {
-	std::cout << "Debug info:BeamHaloProducer::beginLuminosityBlock" << std::endl;
+	//std::cout << "Debug info:BeamHaloProducer::beginLuminosityBlock" << std::endl;
 	// Check the input type string we choose which input we will use
 
 	if (m_inputTypeStr == "MARS")
