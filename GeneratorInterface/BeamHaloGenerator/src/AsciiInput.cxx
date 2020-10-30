@@ -174,7 +174,7 @@ std::vector<std::string> AsciiInput::strToStrVec(std::string inputString)
     {
       if(inputString[i] == '#') 
 	{
-	  std::cout << "comment, breaking loop" << std::endl;
+	  //std::cout << "comment, breaking loop" << std::endl;
 	  break;
 	}
     }
