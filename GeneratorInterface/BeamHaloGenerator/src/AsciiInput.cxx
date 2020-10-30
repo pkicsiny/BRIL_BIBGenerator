@@ -107,13 +107,13 @@ std::tuple<std::vector<std::string>, bool> AsciiInput::readRow()
   
   m_file.getline(m_lineBuffer,MAX_LINE_LENGTH-1);
   if(m_file.eof()) { // True when normally reaching the end of the file.
-    std::cout << "EOF after getline" << std::endl;
+    //std::cout << "EOF after getline" << std::endl;
     return std::make_tuple(row, true); 
   }
    
   // Convert the cstring to a string.
   std::string tmpString(m_lineBuffer);
-  std::cout << "row: " << tmpString << std::endl;
+  //std::cout << "row: " << tmpString << std::endl;
   //std::cout << "length of row: " << tmpString.size() << std::endl;
   // Split the string into substrings.
   return std::make_tuple(strToStrVec(tmpString), false);
