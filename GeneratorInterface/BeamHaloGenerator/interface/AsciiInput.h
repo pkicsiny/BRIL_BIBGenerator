@@ -6,15 +6,18 @@
 #include <fstream>
 #include <iostream>
 #include <sstream> 
+#include <tuple>
  
 class AsciiInput 
 {
  public:
-  AsciiInput(std::string fileName);
+	  AsciiInput(std::string fileName);
+  AsciiInput(std::vector<std::string> fileNames);
   ~AsciiInput();
   int open();
+  int open(int idx);
   int close();
-  std::vector<std::string> readRow();
+  std::tuple<std::vector<std::string>, bool> readRow();
   
   static std::vector<std::string> strToStrVec(std::string inputString);
   static long strToLong(std::string inputString);
@@ -23,6 +26,7 @@ class AsciiInput
  private:
   /** Input file name */
   std::string m_fileName;
+  std::vector<std::string> m_fileNames;
   
   /** Input file stream */
   std::ifstream m_file;

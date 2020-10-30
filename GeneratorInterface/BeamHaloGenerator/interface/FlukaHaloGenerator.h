@@ -27,9 +27,12 @@ class FlukaHaloGenerator: public BeamHaloGenerator {
 
  private:
   
-  AsciiInput *m_input;
+  //List of strings
+  AsciiInput *m_inputs;
+  //AsciiInput *m_input;
   bool m_sameEvent;
   bool m_firstEvent;
+  int m_fileIndex;
   FlukaParticle m_flukaParticle;
   FlukaParticle m_lastFlukaParticle;
 

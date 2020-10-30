@@ -35,7 +35,11 @@ BeamHaloGeneratorSettings::BeamHaloGeneratorSettings(std::vector<std::string> *s
 //---------------------------------------------------------------------
 
 int BeamHaloGeneratorSettings::parseSettings() 
-{ 
+{
+  
+  //debug
+  //std::cout << "BeamHaloGeneratorSettings::parseSettings" << std::endl;
+
   std::vector<std::string> strVector;
   std::vector<std::string>::iterator row_itr;
   std::vector<std::string>::iterator row_itr_end;
@@ -115,6 +119,9 @@ int BeamHaloGeneratorSettings::parseSettings()
 
 int BeamHaloGeneratorSettings::parseLimitSetting(std::vector<std::string> *commandVector) 
 {
+  //debug
+  //std::cout << "BeamHaloGeneratorSettings::parseLimitSetting" << std::endl;
+
   double lowerLimit, upperLimit;
  
   std::string availableLimits[11] = {"pxLimits",
@@ -171,9 +178,15 @@ int BeamHaloGeneratorSettings::parseLimitSetting(std::vector<std::string> *comma
 
 bool BeamHaloGeneratorSettings::checkParticle(BeamHaloParticle *beamHaloParticle) 
 {
+  //debug
+  //std::cout << "BeamHaloGeneratorSettings::checkParticle" << std::endl;
+
   if(!m_settingsParsed) // The parsing hasn't been done yet
   {
-    if(parseSettings() != 0) return false;  
+    if(parseSettings() != 0){
+	std::cout << "Check didn't pass." << std::endl;
+	return false;  
+     }
   }
  
   // Search the allowed PDG id list if it has been defined.
@@ -189,6 +202,7 @@ bool BeamHaloGeneratorSettings::checkParticle(BeamHaloParticle *beamHaloParticle
 
     if(itr==itr_end) 
     {
+      std::cout << "Check didn't pass." << std::endl;
       return false;
     }
   }
@@ -204,7 +218,7 @@ bool BeamHaloGeneratorSettings::checkParticle(BeamHaloParticle *beamHaloParticle
   if(!checkSetting("phiLimits", fabs(beamHaloParticle->fourVector().phi()))) return false;
   if(!checkSetting("rLimits", beamHaloParticle->positionAtScoringPlane().perp())) return false;
   if(!checkSetting("weightLimits", fabs(beamHaloParticle->weight()))) return false;
-  
+  std::cout << "Check passed." << std::endl;
   return true;
 }
  
@@ -212,6 +226,9 @@ bool BeamHaloGeneratorSettings::checkParticle(BeamHaloParticle *beamHaloParticle
 
 bool BeamHaloGeneratorSettings::checkSetting(std::string key, double value) 
 {
+  //debug
+  //std::cout << "BeamHaloGeneratorSettings::checkSetting " << key << ": " << value << std::endl;
+
   std::map<std::string, std::pair<float, float> >::iterator itr = m_limits.find(key);
   if(itr == m_limits.end()) 
   {
@@ -229,6 +246,10 @@ bool BeamHaloGeneratorSettings::checkSetting(std::string key, double value)
 
 void BeamHaloGeneratorSettings::printSettings() 
 {
+
+  //debug
+  //std::cout << "BeamHaloGeneratorSettings::printSettings" << std::endl;
+
   std::cout << "##################################################" << std::endl;
 
   std::cout << "Particles coming from BEAM " << BeamHaloGeneratorSettings::getBeam() << " will be produced." << std::endl;

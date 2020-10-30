@@ -24,7 +24,10 @@
 AsciiInput::AsciiInput(std::string fileName): m_fileName(fileName),
                                                m_file() 
 {}
- 
+
+AsciiInput::AsciiInput(std::vector<std::string> fileNames): m_fileNames(fileNames),
+						m_file()
+{} 
 //-------------------------------------------------------------------------
  
 AsciiInput::~AsciiInput() 
@@ -32,8 +35,13 @@ AsciiInput::~AsciiInput()
  
 //-------------------------------------------------------------------------
 
+// Open single file
+
 int AsciiInput::open() 
 {
+  //debug
+  //std::cout << "AsciiInput::open()" << std::endl;
+
   m_file.open(m_fileName.c_str());
   if(!m_file) 
   {
@@ -42,28 +50,56 @@ int AsciiInput::open()
   }  
   return 0;
 }
- 
-int AsciiInput::close() 
+
+
+
+// Open one file in the list
+int AsciiInput::open(int idx)
 {
-  if(m_file.is_open()) 
+  //debug
+  //std::cout << "AsciiInput::open(" << idx << ")" << std::endl;
+
+  // Sanity check
+  if(!(idx >= 0 and idx < static_cast<int>(m_fileNames.size()))){
+  	std::cerr << "Error: invalid index" << std::endl;
+	return 1;
+  }
+  m_file.open(m_fileNames[idx].c_str());
+  if(!m_file)
+  {
+    std::cerr << "Error: could not open " << m_fileNames[idx] << std::endl;
+    return 1;
+  }
+  return 0;
+}
+
+int AsciiInput::close()
+{
+  //debug
+  //std::cout << "AsciiInput::close" << std::endl;
+
+  if(m_file.is_open())
   {
     m_file.close();
   }
   return 0;
 }
 
-
 //-------------------------------------------------------------------------
 
-std::vector<std::string> AsciiInput::readRow() 
+std::tuple<std::vector<std::string>, bool> AsciiInput::readRow() 
 {
-  std::vector<std::string> row;
   
+  //debug
+  //std::cout << "AsciiInput::readrow" << std::endl;
+ 
+  std::vector<std::string> row;
+
   // Check if the end of file has been reached.
   if(m_file.eof()) 
   {
-    std::cout << "End of file reached."  << std::endl;
-    return row;
+    std::cout << "End of file reached"  << std::endl;
+    return std::make_tuple(row, true);
   }
  
   // Read one line from the input file.  (Need one additional character
@@ -71,33 +107,38 @@ std::vector<std::string> AsciiInput::readRow()
   
   m_file.getline(m_lineBuffer,MAX_LINE_LENGTH-1);
   if(m_file.eof()) { // True when normally reaching the end of the file.
-    return row;
+    //std::cout << "EOF after getline" << std::endl;
+    return std::make_tuple(row, true); 
   }
    
   // Convert the cstring to a string.
   std::string tmpString(m_lineBuffer);
-  //std::cout << m_lineBuffer << std::endl;
- 
+  //std::cout << "row: " << tmpString << std::endl;
+  //std::cout << "length of row: " << tmpString.size() << std::endl;
   // Split the string into substrings.
-  return strToStrVec(tmpString);
+  return std::make_tuple(strToStrVec(tmpString), false);
 }
  
 //-------------------------------------------------------------------------
 
 std::vector<std::string> AsciiInput::strToStrVec(std::string inputString) 
 {
+  //debug
+  //std::cout << "AsciiInput::strToStrVec" << std::endl;
+
   std::vector<std::string> strVec;
   std::string tmpString;
   size_t stringLength, i;
   
   stringLength = inputString.length();
-  
+  //std::cout << "length of string: " << stringLength << std::endl; 
   // Loop over all characters in the string.
   i=0;
   while(i<stringLength) 
   {
-    
-    // Skip over any white spaces at the start of the string.
+  
+    //std::cout << "index in current line: " << i << std::endl;
+    //Skip over any white spaces at the start of the string.
     while(inputString[i] == ' ' || 
           inputString[i] == '\t') {
       i++;
@@ -108,10 +149,14 @@ std::vector<std::string> AsciiInput::strToStrVec(std::string inputString)
     
     // Copy all non-white space characters until a white space, end of string or comment character.
     tmpString.clear();
+
+    //std::cout << "reading word or number" << std::endl;
+    //Comment lines starting with # are not read
     while(inputString[i] != ' ' &&
 	  inputString[i] != '\t' && 
           inputString[i] != '#') 
       {
+	//std::cout << "index: " << i << ", character: " << inputString[i] << ", tmp: " << tmpString << std::endl;
 	tmpString.push_back(inputString[i]);
 	i++;
 	if(i >= stringLength) break;
@@ -119,17 +164,23 @@ std::vector<std::string> AsciiInput::strToStrVec(std::string inputString)
     
     // Push the string back if its length is greater than zero.
     if(tmpString.length() > 0) 
-    {
+    { 
+      //std::cout << "pushing word or number to vec" << std::endl;
       strVec.push_back(tmpString);
     }
 
     // Check if a comment was found.
     if(i < stringLength) 
     {
-      if(inputString[i] == '#') break;
+      if(inputString[i] == '#') 
+	{
+	  //std::cout << "comment, breaking loop" << std::endl;
+	  break;
+	}
     }
   }
   
+  //std::cout << "length of vector: " << strVec.size() << std::endl;  
   return strVec;
 }
 
@@ -138,6 +189,10 @@ std::vector<std::string> AsciiInput::strToStrVec(std::string inputString)
 
 long AsciiInput::strToLong(std::string inputString) 
 {
+  //debug
+  //std::cout << "AsciiInput::strToLong" << std::endl;
+
+
   long longValue;
   std::istringstream inStr(inputString);
   inStr >> longValue;
@@ -148,6 +203,9 @@ long AsciiInput::strToLong(std::string inputString)
  
 double AsciiInput::strToDouble(std::string inputString) 
 {
+  //debug
+  //std::cout << "AsciiInput::strToDouble" << std::endl;
+
   double doubleValue;
   std::istringstream inStr(inputString);
   inStr >> doubleValue;
