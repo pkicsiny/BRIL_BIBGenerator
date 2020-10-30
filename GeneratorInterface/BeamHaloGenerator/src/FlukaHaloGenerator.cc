@@ -46,7 +46,7 @@ FlukaHaloGenerator::FlukaHaloGenerator(edm::BeamHaloProducer *mainAlg, const edm
 {
 	//debug
 	//std::cout << "FlukaHaloGenerator::constructor" << std::endl;
-	std::cout << "FlukaHaloGenerator: starting event generation ... " << std::endl;
+	//std::cout << "FlukaHaloGenerator: starting event generation ... " << std::endl;
 }
 
 
@@ -88,7 +88,7 @@ void FlukaHaloGenerator::initialize()
 int FlukaHaloGenerator::fillEvt(edm::Event *event)
 {
 	//debug
-	std::cout << "FlukaHaloGenerator::fillEvt" << std::endl;
+	//std::cout << "FlukaHaloGenerator::fillEvt" << std::endl;
 	
 	evt = new HepMC::GenEvent(); // The event we will produce
 
@@ -96,15 +96,15 @@ int FlukaHaloGenerator::fillEvt(edm::Event *event)
 
 	// Read one FLUKA event passing the selection cuts.
 	if(!readEvent(&beamHaloEvent)) return -1;
-	std::cout << "Successfully read one event." << std::endl;
+	//std::cout << "Successfully read one event." << std::endl;
 	
 	// Convert the particles to GenParticles and attach them to the
 	// event.  Flip the event (come from the other beam) if needed.
 	if(!BeamHaloGenerator::convertEvent(&beamHaloEvent, evt, event)) return -1;
-	std::cout << "Successfully converted event." << std::endl;
+	//std::cout << "Successfully converted event." << std::endl;
 	// Set the event number
 	evt->set_event_number(m_eventNumber);
-	std::cout << "Set event number: " << m_eventNumber << std::endl;
+	//std::cout << "Set event number: " << m_eventNumber << std::endl;
 
 	// Set the weights for this event (1 because the event is unweighted by the buffer)
 	evt->weights().push_back(1.0);
@@ -121,7 +121,7 @@ int FlukaHaloGenerator::fillEvt(edm::Event *event)
 	//auto_ptr<GenEventInfoProduct> genEventInfo(new GenEventInfoProduct(evt));
 	std::unique_ptr<GenEventInfoProduct> genEventInfo(new GenEventInfoProduct(evt));
 	event->put(std::move(genEventInfo));
-        std::cout << "Finished filling event." << std::endl;
+        //std::cout << "Finished filling event." << std::endl;
 	return 1;
 }
 
@@ -193,14 +193,14 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 	// If there was a last event.
 	if(!m_firstEvent)
 	{
-		std::cout << "This is not the first event outside while." << std::endl;
+		//std::cout << "This is not the first event outside while." << std::endl;
 		particleData = m_particleTable->particle(m_lastFlukaParticle.pdgId());
 
 		// If the last event caused the same event flag to be set to false
 		// copy the last particle into the vector of those in this event.
 		if(!m_sameEvent)
 		{
-			std::cout << "This is also not the same event outside while." << std::endl;
+			//std::cout << "This is also not the same event outside while." << std::endl;
 			// Fill the BeamHaloParticle with the data in the FlukaParticle
 			if(beamHaloParticle.fill(particleData, &m_lastFlukaParticle))
 			{
@@ -215,7 +215,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 			// Append the BeamHalo particle to the event if it passes the cuts.
 			if(m_BHG_settings->checkParticle(&beamHaloParticle))
 			{
-				std::cout << "Push particle to beamhaloevent." << std::endl;
+				//std::cout << "Push particle to beamhaloevent." << std::endl;
 				beamHaloEvent->push_back(beamHaloParticle);
 			        //+1 particle passed cuts
 				m_nAfterCuts++;
@@ -226,7 +226,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 
 			// Set the same event flag to enter the while loop to read the
 			// rest of this event.
-			std::cout << "Set SE = true" << std::endl;
+			//std::cout << "Set SE = true" << std::endl;
 			m_sameEvent = true;
 		}
 	}
@@ -237,7 +237,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 	bool endOfFile = false;
         std::string thisEvent = "0";
 	std::string lastEvent = "0";
-	std::cout << "before while: SE =" << m_sameEvent << " and FE =" << m_firstEvent << std::endl;
+	//std::cout << "before while: SE =" << m_sameEvent << " and FE =" << m_firstEvent << std::endl;
 	while(m_sameEvent && !endOfFile)
 	{
 	
@@ -250,7 +250,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 			
 			//Close ifstream (currently open file) 
 		        m_inputs->close();
-			std::cout << "Closed file index " << m_fileIndex << std::endl;
+			//std::cout << "Closed file index " << m_fileIndex << std::endl;
 			
 			m_fileIndex += 1;
 			//Break loop if processed last file
@@ -275,7 +275,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 		//Check if it is an empty row, usually at the beginning of the file, starting with #
 		if(row.size() == 0)
 		{
-			std::cout << "Invalid row. Sipping to next row..." << std::endl;
+			//std::cout << "Invalid row. Sipping to next row..." << std::endl;
 			//endOfFile = true
 			continue;
 		}
@@ -302,19 +302,19 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 			// Check if the event id of the last particle is the same as this particle.
 			if(m_lastFlukaParticle.eventId() == m_flukaParticle.eventId())
 			{
-				std::cout << "This particle is from the same event - set SE = true" << std::endl;
+				//std::cout << "This particle is from the same event - set SE = true" << std::endl;
 				m_sameEvent = true;
 			}
 			else
 			{
-				std::cout << "This particle is not from the same event: set SE = false, break loop without checks." << std::endl;
+				//std::cout << "This particle is not from the same event: set SE = false, break loop without checks." << std::endl;
 				m_sameEvent = false;
 			}
 		}
 		else
 		{
 			// For the first event.
-			std::cout << "This is the first event: set FE = false and SE = true" << std::endl;
+			//std::cout << "This is the first event: set FE = false and SE = true" << std::endl;
 			m_firstEvent = false;
 			m_sameEvent = true;
 		}
@@ -323,7 +323,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 		// this event.
 		if(m_sameEvent)
 		{
-			std::cout << "This is still event " << thisEvent << "." << std::endl;
+			//std::cout << "This is still event " << thisEvent << "." << std::endl;
 			// Fill the BeamHaloParticle with the data in the FlukaParticle
 			if(beamHaloParticle.fill(particleData, &m_flukaParticle))
 			{
@@ -338,7 +338,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 			// Append the BeamHalo particle to the event if it passes the cuts.
 			if(m_BHG_settings->checkParticle(&beamHaloParticle))
 			{
-				std::cout << "Push particle to beamhaloevent." << std::endl;
+				//std::cout << "Push particle to beamhaloevent." << std::endl;
 				beamHaloEvent->push_back(beamHaloParticle);
 			        //+1 particle passed cuts
 				m_nAfterCuts++;
@@ -348,7 +348,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 			}
 			else
 			{
-				std::cout << "Particle didn't pass cuts." << std::endl;
+				//std::cout << "Particle didn't pass cuts." << std::endl;
 			}
 	
 			//save last event number
@@ -381,7 +381,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 	std::vector<BeamHaloParticle>::iterator itr_end = beamHaloEvent->end();
 
 	bool passed = false;
-	std::cout << "Running a check on all " << beamHaloEvent->size() << " particles of current event." << endl;
+	//std::cout << "Running a check on all " << beamHaloEvent->size() << " particles of current event." << endl;
 	for(;itr!=itr_end;++itr)
 	{
 		// Check the generator settings for this particle.
@@ -398,7 +398,7 @@ int FlukaHaloGenerator::readEvent(std::vector<BeamHaloParticle> *beamHaloEvent)
 
 	if(!passed)
 	{
-		std::cout << "None passed." << std::endl;
+		//std::cout << "None passed." << std::endl;
 		if(!FlukaHaloGenerator::readEvent(beamHaloEvent)) return 0;
 	}
 
