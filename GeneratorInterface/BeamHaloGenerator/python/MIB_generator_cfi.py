@@ -81,12 +81,14 @@ MARS_generator = cms.EDProducer("BeamHaloProducer",
 # beam-gas_IR5       : BEAM1 beam gas inelastic events
 
 
-
 FLUKA_generator = cms.EDProducer("BeamHaloProducer",
 
     InputType = cms.string('FLUKA'),
     #InputFile = cms.string('beam-halo_3.5TeV-R5'),
-    InputFile = cms.string('beam-gas_IR5'),
+    InputFile = cms.string('beam-gas_IR7'),
+    FlukaFiles = cms.vstring("test"),
+    #InputFile = cms.vstring('beam-gas_IR5'), # default values, instantiated in BH_generator
+
 
     generatorSettings = cms.untracked.vstring(
     #    "allowedPdgId 13 -13",  # The PDG IDs of the allowed particles
@@ -104,4 +106,3 @@ FLUKA_generator = cms.EDProducer("BeamHaloProducer",
     "rLimits      -1 -1",
     "weightLimits -1 -1")
 )
-

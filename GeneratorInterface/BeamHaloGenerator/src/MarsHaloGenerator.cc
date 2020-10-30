@@ -363,8 +363,9 @@ void MarsHaloGenerator::fillBuffer(AsciiInput* my_input, BeamHaloParticleBuffer*
   
   do 
   {
+    bool eof = false;
     // Read one row of the ASCII file.
-    row = my_input->readRow();
+    tie(row, eof) = my_input->readRow();
     if(row.size() == 0) continue;
  
     // Fill a MarsParticle with values from the string vector.

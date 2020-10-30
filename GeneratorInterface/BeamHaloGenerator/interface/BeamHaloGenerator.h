@@ -69,7 +69,8 @@ class BeamHaloGenerator {
   bool m_flipEventEnabled;
   
   /** Input file name */
-  std::string m_inputFile;
+  //std::string m_inputFiles;
+  std::vector<std::string> m_inputFiles;
   
   /** The file name used to store the binary buffer if required. */
   std::string m_binaryBufferFile; 
@@ -78,7 +79,8 @@ class BeamHaloGenerator {
   CLHEP::HepRandomEngine *m_engine; 
   
   /** Ascii input */
-  AsciiInput *m_asciiInput;
+  //AsciiInput *m_asciiInput;
+  AsciiInput *m_asciiInputs;
 
   /** Generator settings */
   BeamHaloGeneratorSettings *m_BHG_settings;
