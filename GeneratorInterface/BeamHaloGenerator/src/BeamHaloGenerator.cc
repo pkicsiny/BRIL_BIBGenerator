@@ -111,7 +111,7 @@ void BeamHaloGenerator::initialize()
 void BeamHaloGenerator::finalize()
 {
 	//endl
-	std::cout << "BeamHaloGenerator::finalize" << std::endl;
+	//std::cout << "BeamHaloGenerator::finalize" << std::endl;
 
 	m_rootFile->Write();
 	m_rootFile->Close();
