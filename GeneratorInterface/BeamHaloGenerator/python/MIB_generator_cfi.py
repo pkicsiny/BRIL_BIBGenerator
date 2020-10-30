@@ -25,7 +25,7 @@ import FWCore.ParameterSet.Config as cms
 MARS_generator = cms.EDProducer("BeamHaloProducer",
 
     InputType = cms.string('MARS'),
-    InputFile = cms.vstring(''),
+    InputFile = cms.string(''),
 
     # Settings for the beam halo generator
     #
@@ -81,7 +81,6 @@ MARS_generator = cms.EDProducer("BeamHaloProducer",
 # beam-gas_IR5       : BEAM1 beam gas inelastic events
 
 
-print("Creating FLUKA generator...")
 FLUKA_generator = cms.EDProducer("BeamHaloProducer",
 
     InputType = cms.string('FLUKA'),
@@ -107,4 +106,3 @@ FLUKA_generator = cms.EDProducer("BeamHaloProducer",
     "rLimits      -1 -1",
     "weightLimits -1 -1")
 )
-print("FLUKA generator created.")
