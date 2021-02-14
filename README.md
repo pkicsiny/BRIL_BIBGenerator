@@ -44,7 +44,16 @@ change the geometry according to the usecase at lines 76-85
 cd ../../
 mkdir temp
 cd temp
-
+cp ../CMSSW_11_2_0_pre6 .
+cd CMSSW_11_2_0_pre6/src
+delete everything except the SimG4Core folder
+git clone https://github.com/pkicsiny/BRIL_ITsim.git
+Delete everything from the above repository except the DataProductionTkOnly folder
+cd ../../
+tar -czvf sandbox.tar.bz2 CMSSW_11_2_0_pre6
+cp sandbox.tar.bz2 ../CMSSW_11_2_0_pre6/src/
+cd ../CMSSW_11_2_0_pre6/src/
+condor_submit generatePU.sub
 ```
 ## In details
 Login to _lxplus_.
@@ -131,7 +140,7 @@ wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/python/BH_SimTrigRec.py
 ```
 #### generatePU.sub
-The first file (_generatePU.sub_) will be used to submit some files to the lxbatch cluster to do the simulation. Line 1 can be ignored for MIB studies and line 2 specifies the number of MIB events to simulate. The rest of the file can be left as it is, except the last line, where you can define the number of "jobs" to submit and queue on the cluster. In order to run the most efficiently, lxbatch splits up the simulation into smaller chunks or sub-simulations (=jobs) and runs them in parallel. Depending on the number of events you intend to simulate, you can change the queue parameter. For example if at line 2 __NEvents__ is set to 200000, you can set the __queue___ to 40, that tells lxbatch to split up the simulation into 40 jobs each simulating only 200000/40=50000 events. This splitting is performed by selecting a subset of the events at runtime in the _BH_SimTrigRec.py_ config file at lines 103-105 (currently set to 5000 events but it has to be modified accordingly to __NEvents__/__queue__). Lines 7-9 _generatePU.sub_ in define the path where the simulation output, error and log files will be saved. Currently it is set to be saved in a _batchlog_ folder which you can either change or create the _batchlog_ directory in _/src_.
+The first file (_generatePU.sub_) will be used to submit some files to the lxbatch cluster to do the simulation, using [HTCondor](https://batchdocs.web.cern.ch/local/quick.html). Line 1 can be ignored for MIB studies and line 2 specifies the number of MIB events to simulate. The rest of the file can be left as it is, except the last line, where you can define the number of "jobs" to submit and queue on the cluster. In order to run the most efficiently, lxbatch splits up the simulation into smaller chunks or sub-simulations (=jobs) and runs them in parallel. Depending on the number of events you intend to simulate, you can change the queue parameter. For example if at line 2 __NEvents__ is set to 200000, you can set the __queue___ to 40, that tells lxbatch to split up the simulation into 40 jobs each simulating only 200000/40=50000 events. This splitting is performed by selecting a subset of the events at runtime in the _BH_SimTrigRec.py_ config file at lines 103-105 (currently set to 5000 events but it has to be modified accordingly to __NEvents__/__queue__). Lines 7-9 _generatePU.sub_ in define the path where the simulation output, error and log files will be saved. Currently it is set to be saved in a _batchlog_ folder which you can either change or create the _batchlog_ directory in _/src_.
 ```sh
 mkdir batchlog
 ```
