@@ -111,7 +111,7 @@ void BeamHaloGenerator::initialize()
 void BeamHaloGenerator::finalize()
 {
 	//endl
-	std::cout << "BeamHaloGenerator::finalize" << std::endl;
+	//std::cout << "BeamHaloGenerator::finalize" << std::endl;
 
 	m_rootFile->Write();
 	m_rootFile->Close();
@@ -132,7 +132,7 @@ int BeamHaloGenerator::convertEvent(std::vector<BeamHaloParticle>* beamHaloEvent
 		edm::Event* event)
 {
 	//debug
-	//std::cout << "BeamHaloGenerator::convertEvent" << std::endl;
+	//std::cout << " rr BeamHaloGenerator::convertEvent" << std::endl;
 
 	// Seed for randomnumbers
 	edm::Service<edm::RandomNumberGenerator> rng;
@@ -159,6 +159,10 @@ int BeamHaloGenerator::convertEvent(std::vector<BeamHaloParticle>* beamHaloEvent
 		m_weight  = (*itr).weight();
 		m_PDG_ID  = (*itr).pdgId();
 		m_process = (*itr).processOrigin();
+		
+		//debug
+		//std::cout << "z position of particle: " <<  position.z() << std::endl;
+	    	//std::cout << "interface plane: " << m_interfacePlane << std::endl;
 
 		if (m_BHG_settings->getBeam()==2) // BEAM 2: negative Z_CMS, positive pZ
 		{
@@ -182,6 +186,9 @@ int BeamHaloGenerator::convertEvent(std::vector<BeamHaloParticle>* beamHaloEvent
 		}
 		else  // BEAM 1: positive Z_CMS, negative pZ
 		{
+			//debug
+			//std::cout << "beam 1" << std::endl;
+
 			pz = fourVector.pz();
 			fourVector.setPz(-pz);
 			genParticle = new HepMC::GenParticle(fourVector,(*itr).pdgId(),1);
@@ -202,6 +209,11 @@ int BeamHaloGenerator::convertEvent(std::vector<BeamHaloParticle>* beamHaloEvent
 			m_energy = fourVector.e();
 			m_seed   = m_seed;
 		}
+
+		//debug
+		//std::cout << "pos z: " << m_pos[2] << std::endl;
+		//std::cout << "4vec pz: " << m_mom[2] << std::endl;
+		//std::cout << "E: " << m_energy << std::endl;
 
 		genVertex->add_particle_out(genParticle);
 		evt->add_vertex(genVertex);

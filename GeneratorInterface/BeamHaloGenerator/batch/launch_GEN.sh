@@ -105,6 +105,4 @@ while ($i != $N_RUN)
 	    bsub -q 1nd -e /dev/null -o /tmp/${LOGNAME}_out.txt gen_job_${TYPE}_${BEAM}_${i}.sh
 	endif
     endif
-end 
-
-
+end
