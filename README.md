@@ -6,7 +6,7 @@ For an official introduction and manual for CMSSW have a look at the offline wor
 https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook
 
 ## Setup
-#Quickstart
+# Quickstart
 BIB generation:
 ```sh
 ssh -Y username@lxplus.cern.ch
@@ -97,7 +97,7 @@ process.load('Configuration.Geometry.GeometryExtended2026D63_cff')
 ```
 You can run the generation step by running the cofig file _BH_generation.py_.
 ```sh
-cmsRun python/BH_generation.py 
+cmsRun BH_generation.py 
 ```
 which invokes code from _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/python/MIB_generator_cff.py_ which in turn invokes CMSSW through _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/src/BeamHaloProducer.cc_. <br>
 
