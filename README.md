@@ -127,11 +127,13 @@ At line 100 you can also see:
 ```sh
 tar -xf sandbox.tar.bz2
 ```
-which refers to an important step in setting up the simulations on the cluster. By default, simulations on lxbatch do not have acces to CMSSW code stored locally on lxplus, therefore we need to send them to lxbatch along with the config files, wrapped up in a tar file, which will be automatically unpacked and used on the cluster. To create _sandbox.tar.bz2_, first create a temporary directory:
+which refers to an important step in setting up the simulations on the cluster. By default, simulations on lxbatch do not have acces to CMSSW code stored locally on lxplus, therefore we need to send them to lxbatch along with the config files, wrapped up in a tar file, which will be automatically unpacked and used on the cluster. To create _sandbox.tar.bz2_, first exit the _CMSSW_11_2_0_pre6_ folder and create a temporary directory
 ```sh
-mkdir sanbox
+cd ../../
+mkdir sandbox
 cd sandbox
 ```
+and copy here the full CMSSW_11_2_0_pre6 directory. Now enter the _CMSSW_11_2_0_pre6/src_ and delete everything except _BRIL_BIBGenerator/GeneratorInterface/SimG4Core_ which contains code for handling MIB particles in CMSSW and thus necessary for such simulations. To read more about what is different when simulating MIB particles instead of regular beam collision events, see [here](https://sviret.web.cern.ch/sviret/Images/CMS/MIB/MIB/Welcome.php?n=Work.Prod).
 In this file you can specify the input at line 28, pointing to the output root file of the generation step, and the output at line 29, for which it is again recommended to create a separate directory:
 ```sh
 mkdir simulation_output
