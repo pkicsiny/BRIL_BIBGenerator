@@ -24,6 +24,11 @@ line 44: path/to/generator_output
 line 54: path/to/input
 cmsRun BH_generation.py 
 ```
+
+Simulation:
+```sh
+wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/python/BH_SimTrigRec.py
+```
 ## In details
 Login to _lxplus_.
 ```sh
@@ -102,7 +107,20 @@ cmsRun BH_generation.py
 which invokes code from _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/python/MIB_generator_cff.py_ which in turn invokes CMSSW through _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/src/BeamHaloProducer.cc_. <br>
 
 #### Simulation
+The second step consists of the transport of paticles and the simulation of particle-matter interactions in the CMSSW geometry model. First get the config file, similar to the previous step:
+```sh
+wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/python/BH_SimTrigRec.py
+```
+and a bash script that is used to launch the simulation step:
+```sh
+wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/runSimTkOnly_local.sh
+```
+In this file you can specify the input at line 28, pointing to the output root file of the generation step, and the output at line 29, for which it is again recommended to create a separate directory:
+```sh
+mkdir simulation_output
+```
+
+In this file, line 23 should point to the output root file from the generation step i.e. to _absolute/path/to/src/generator_output/myoutput.root_ Also do not forget the _file:_ prefix before the path!
 The second step consists of the transport of paticles and the simulation of particle-matter interactions in the CMSSW geometry model. This step can be launched by executing:
-`cmsRun BH_SimTrigRec.py` <br>
 
 #### Running on lxbatch
