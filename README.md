@@ -1,8 +1,7 @@
 # BRIL_BIBGenerator
 ## Introduction
 This guide gives instructions on how to set up and run Beam Induced Background (BIB, alternatively MIB for Machine Induced Background) simulations in CMSSW with a two step method (BIB particle generation + simulation).
-For an official introduction and manual for CMSSW have a look at the offline workbook: 
-https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook
+For an official introduction and manual for CMSSW have a look at the offline [workbook](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook).
 
 ## Setup
 ### Quickstart
