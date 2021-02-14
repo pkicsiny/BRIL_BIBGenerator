@@ -118,8 +118,11 @@ wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/runSimTkOnly.sh
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/python/BH_SimTrigRec.py
 ```
-The first file (_generatePU.sub_) will be used to submit some files to the lxbatch cluster to do the simulation. Line 1 can be ignored for MIB studies and line 2 specifies the number of MIB events to simulate. The rest of the file can be left as it is, except the last line, where you can define the number of "jobs" to submit and queue on the cluster. In order to run the most efficiently, lxbatch splits up the simulation into smaller chunks or sub-simulations (=jobs) and runs them in parallel. Depending on the number of events you intend to simulate, you can change the queue parameter. For example if at line 2 __NEvents__ is set to 200000, you can set the __queue___ to 40, that tells lxbatch to split up the simulation into 40 jobs each simulating only 200000/40=50000 events. <br>
-The bash script file _runSimTkOnly.sh_ is the highest level file controlling the simulation and invokes the python config file _BH_SimTrigRec.py_. In _runSimTkOnly.sh_, the __INFILE__ parameter (currently at line 30) has to be set to point to the output root file from the generation step (e.g. at _/absolute/path/to/cmssw_test/CMSSW_11_2_0_pre6/src/generator_output/myoutput.root_). Line 36 should be similarly changed to point to the desired simulation output directory (e.g. to _/absolute/path/to/cmssw_test/CMSSW_11_2_0_pre6/src/simulation_output_). In general, nothing else has to be changed in this file. You can notice that it takes some command line arguments (lines 17-20): <br> 
+The first file (_generatePU.sub_) will be used to submit some files to the lxbatch cluster to do the simulation. Line 1 can be ignored for MIB studies and line 2 specifies the number of MIB events to simulate. The rest of the file can be left as it is, except the last line, where you can define the number of "jobs" to submit and queue on the cluster. In order to run the most efficiently, lxbatch splits up the simulation into smaller chunks or sub-simulations (=jobs) and runs them in parallel. Depending on the number of events you intend to simulate, you can change the queue parameter. For example if at line 2 __NEvents__ is set to 200000, you can set the __queue___ to 40, that tells lxbatch to split up the simulation into 40 jobs each simulating only 200000/40=50000 events. Lines 7-9 define the path where the simulation output, error and log files will be saved. Currently it is set to be saved in a _batchlog_ folder which you can either change or create the _batchlog_ directory in _/src_.
+```sh
+mkdir batchlog
+```
+At line 10 you can see that 2 files will be transferred to the cluster if the simulations is launched. The bash script file _runSimTkOnly.sh_ is the highest level file controlling the simulation and invokes the python config file _BH_SimTrigRec.py_. Its path is now set to _python/runSimTkOnly.sh_ but it should be changed accordingly, i.e. in this case just remove the _python_ part. In _runSimTkOnly.sh_, the __INFILE__ parameter (currently at line 30) has to be set to point to the output root file from the generation step (e.g. at _/absolute/path/to/cmssw_test/CMSSW_11_2_0_pre6/src/generator_output/myoutput.root_). Line 36 should be similarly changed to point to the desired simulation output directory (e.g. to _/absolute/path/to/cmssw_test/CMSSW_11_2_0_pre6/src/simulation_output_). In general, nothing else has to be changed in this file. You can notice that it takes some command line arguments (lines 17-20): <br> 
 __PU__: refers to pileup but it can be ignored for BIB particle simulations. <br>
 __NEVENTS__: number of events to read from the generator step output file and simulate. This parameter is inferred from line 1 of _generatePU.sub_. <br>
 __JOBID__: this can also be ignored. It wil be set automatically on lxbatch and can take a value from 0 to the value of __queue__, which is set in the last line of _generatePU.sub_. The __JOBID__ parameter uniquely identifies each split simulation chunk on the cluster. <br>
@@ -127,16 +130,26 @@ At line 100 you can also see:
 ```sh
 tar -xf sandbox.tar.bz2
 ```
-which refers to an important step in setting up the simulations on the cluster. By default, simulations on lxbatch do not have acces to CMSSW code stored locally on lxplus, therefore we need to send them to lxbatch along with the config files, wrapped up in a tar file, which will be automatically unpacked and used on the cluster. To create _sandbox.tar.bz2_, first exit the _CMSSW_11_2_0_pre6_ folder and create a temporary directory
+which refers to an important step in setting up the simulations on the cluster. By default, simulations on lxbatch do not have acces to CMSSW code stored locally on lxplus, therefore we need to send them to lxbatch along with the config file, wrapped up in a tar package, which will be automatically unpacked and used on the cluster. To create _sandbox.tar.bz2_, first exit the _CMSSW_11_2_0_pre6_ folder and create a temporary directory
 ```sh
 cd ../../
-mkdir sandbox
-cd sandbox
+mkdir temp
+cd temp
 ```
-and copy here the full CMSSW_11_2_0_pre6 directory. Now enter the _CMSSW_11_2_0_pre6/src_ and delete everything except _BRIL_BIBGenerator/GeneratorInterface/SimG4Core_ which contains code for handling MIB particles in CMSSW and thus necessary for such simulations. To read more about what is different when simulating MIB particles instead of regular beam collision events, see [here](https://sviret.web.cern.ch/sviret/Images/CMS/MIB/MIB/Welcome.php?n=Work.Prod).
-In this file you can specify the input at line 28, pointing to the output root file of the generation step, and the output at line 29, for which it is again recommended to create a separate directory:
+and copy here the full CMSSW_11_2_0_pre6 directory. Now enter the _CMSSW_11_2_0_pre6/src_ and delete everything except _BRIL_BIBGenerator/GeneratorInterface/SimG4Core_ which contains code for handling MIB particles in CMSSW and thus necessary for such simulations. To read more about what is different when simulating MIB particles instead of regular beam collision events, see [here](https://sviret.web.cern.ch/sviret/Images/CMS/MIB/MIB/Welcome.php?n=Work.Prod). Then move _SimG4Core_ back up to the _/src_ directory so that now that is the only content there. Then you will need some code for simulating detector response and digitization, which that can depend on the usecase. In casew of BRIL, simulations were done with having only the tracker geometry. To get the necessary python files for this usecase, get the directory _DataProductionTkOnly_ from [here](https://github.com/pkicsiny/BRIL_ITsim). The easiest (and dirtiest) way is to clone the whole repository and delete everything except the _DataProductionTkOnly_ folder.
 ```sh
-mkdir simulation_output
+git clone https://github.com/pkicsiny/BRIL_ITsim.git
 ```
-
-#### Running on lxbatch
+In the end you should have only _SimG4Core_ (MIB specific code) and _DataProductionTkOnly_ (detector specific code) directories in your copy of _CMSSW_11_2_0_pre6/src_. If so, move back up into your _temp_ directory and compress your CMSSW release by
+```sh
+tar -czvf sandbox.tar.bz2 CMSSW_11_2_0_pre6
+```
+The resulting _sandbox.tar.bz2_ you can now copy to your original _CMSSW_11_2_0_pre6/src/_ directory.
+```sh
+cp sandbox.tar.bz2 ../CMSSW_11_2_0_pre6/src/
+```
+Finally, use
+```sh
+condor_submit generatePU.sub
+```
+to submit the simulation to lxbatch. The result root files will be placed to the path which was set in line 36 of _runSimTkOnly.sh_.
