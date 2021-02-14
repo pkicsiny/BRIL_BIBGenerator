@@ -6,7 +6,7 @@ https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook
 
 ## Setup
 ### Quickstart
-BIB generation:
+Generation:
 ```sh
 ssh -Y username@lxplus.cern.ch
 mkdir cmssw_test
@@ -24,7 +24,7 @@ set input files location at line 54: path/to/input
 cmsRun BH_generation.py 
 ```
 
-### Simulation:
+Simulation:
 ```sh
 mkdir simulation_output
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/generatePU.sub
@@ -55,7 +55,7 @@ cp sandbox.tar.bz2 ../CMSSW_11_2_0_pre6/src/
 cd ../CMSSW_11_2_0_pre6/src/
 condor_submit generatePU.sub
 ```
-## In details
+### In details
 Login to _lxplus_.
 ```sh
 ssh -Y username@lxplus.cern.ch
@@ -132,7 +132,7 @@ cmsRun BH_generation.py
 ```
 which invokes code from _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/python/MIB_generator_cff.py_ which in turn invokes CMSSW through _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/src/BeamHaloProducer.cc_. <br>
 
-### Simulation
+#### Simulation step
 The second step consists of the transport of paticles and the simulation of particle-matter interactions in the CMSSW geometry model. The code for this step is created for running on lxbatch as simulating a large number of generated MIB particles might take a long time. First let's get the 3 necessary config files:
 ```sh
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/generatePU.sub
