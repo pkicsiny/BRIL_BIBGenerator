@@ -27,7 +27,12 @@ cmsRun BH_generation.py
 
 Simulation:
 ```sh
+mkdir simulation_output
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/python/BH_SimTrigRec.py
+wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/runSimTkOnly_local.sh
+line 28: path/to/generator/output/myoutput.root
+line 29: path/to/simulation_output
+
 ```
 ## In details
 Login to _lxplus_.
@@ -92,7 +97,7 @@ __jobId__: relevant when running the generation step on lxbatch, where the simul
 __tDirectory__: absolute path of the diractory to where the root file will be created. It will contain the same particles as in the FLUKA dump input, but in a different, CMSSW friendly format, called [HEPMC](http://www.t2.ucsd.edu/twiki2/bin/view/HEPProjects/HepMCReference). <br>
 
 In addition, some other parameters can be specified inside the config file: <br>
-__inputPath__: absolute path specifying the location of the FLUKA input files. The line _options.inputFiles= [inputPath + "/" + f for f in os.listdir(inputPath) if f[:3] == "run"]_ automatically parses the file names in the __inputPath__ directory and selects files whose name begins with _run_. This parsing can also be adapted or removed depending on the specific usecase. <br>
+__inputPath__: absolute path specifying the location of the FLUKA input files. Also do not forget the _file:_ prefix before the path! The line _options.inputFiles= [inputPath + "/" + f for f in os.listdir(inputPath) if f[:3] == "run"]_ automatically parses the file names in the __inputPath__ directory and selects files whose name begins with _run_. This parsing can also be adapted or removed depending on the specific usecase. <br>
 __nevents__: number of events, alternative hard-coded variant of __nEvents__. <br>
 The output file name can be changed under the _#specify output name_ comment. <br>
 
@@ -119,8 +124,5 @@ In this file you can specify the input at line 28, pointing to the output root f
 ```sh
 mkdir simulation_output
 ```
-
-In this file, line 23 should point to the output root file from the generation step i.e. to _absolute/path/to/src/generator_output/myoutput.root_ Also do not forget the _file:_ prefix before the path!
-The second step consists of the transport of paticles and the simulation of particle-matter interactions in the CMSSW geometry model. This step can be launched by executing:
 
 #### Running on lxbatch
