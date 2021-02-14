@@ -102,11 +102,11 @@ Before running the generation step, you need to compile and build your C++ files
 ```sh
 scram b
 ```
-and it is also recommended t ostore the output of the generatio nstep in a dedicated folder.
+and it is also recommended to store the output of the generation step in a dedicated folder.
 ```sh
 mkdir generator_output
 ```
-Before launching the BIB generation, you might want to have a look at the contencts of the config file.
+Before launching the BIB generation, you might want to have a look at the contents of the config file.
 ```sh
 vi BH_generation.py
 ```
@@ -114,7 +114,7 @@ vi BH_generation.py
 __nEvents__: number of events to read from the FLUKA input files. Can be set inside the config file through the _nevents_ variable. If set to -1, all events from the inputs will be processed. Note that this is not recommended as CMSSW will throw an error when reaching the end of the last file. Instead, it is recommended to check the number of events input file beforehand and set this parameter accordingly, e.g. to 10000 if the inputs contain let's say 10426 events. <br>
 __nThreads__: number of parallel computing threads to use. Default is 1. <br>
 __jobId__: relevant when running the generation step on lxbatch, where the simulation is split into smaller chunks each having a unique job ID. Not used if the code is run locally on lxplus. Default is 0. <br>
-__tDirectory__: absolute path of the diractory to where the root file will be created. It will contain the same particles as in the FLUKA dump input, but in a different, CMSSW friendly format, called [HEPMC](http://www.t2.ucsd.edu/twiki2/bin/view/HEPProjects/HepMCReference). <br>
+__tDirectory__: absolute path of the directory to where the root file will be created. It will contain the same particles as in the FLUKA dump input, but in a different, CMSSW friendly format, called [HEPMC](http://www.t2.ucsd.edu/twiki2/bin/view/HEPProjects/HepMCReference). <br>
 
 In addition, some other parameters can be specified inside the config file: <br>
 __inputPath__: absolute path specifying the location of the FLUKA input files. Also do not forget the _file:_ prefix before the path! The line _options.inputFiles= [inputPath + "/" + f for f in os.listdir(inputPath) if f[:3] == "run"]_ automatically parses the file names in the __inputPath__ directory and selects files whose name begins with _run_. This parsing can also be adapted or removed depending on the specific usecase. <br>
@@ -125,14 +125,14 @@ Although the CMS geometry plays no role in the generation step, CMSSW always exp
 ```sh
 process.load('Configuration.Geometry.GeometryExtended2026D63_cff')
 ```
-You can run the generation step by running the cofig file _BH_generation.py_.
+You can run the generation step by running the config file _BH_generation.py_.
 ```sh
 cmsRun BH_generation.py 
 ```
 which invokes code from _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/python/MIB_generator_cff.py_ which in turn invokes CMSSW through _BRIL_BIBGenerator/GeneratorInterface/BeamHaloGenerator/src/BeamHaloProducer.cc_. <br>
 
 #### Simulation step
-The second step consists of the transport of paticles and the simulation of particle-matter interactions in the CMSSW geometry model. The code for this step is created for running on lxbatch as simulating a large number of generated MIB particles might take a long time. First let's get the 3 necessary config files:
+The second step consists of the transport of particles and the simulation of particle-matter interactions in the CMSSW geometry model. The code for this step is created for running on lxbatch as simulating a large number of generated MIB particles might take a long time. First let's get the 3 necessary config files:
 ```sh
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/generatePU.sub
 wget https://raw.githubusercontent.com/pkicsiny/BRIL_ITsim/master/BIBGeneration/runSimTkOnly.sh
@@ -160,7 +160,7 @@ tar -xf sandbox.tar.bz2
 which refers to an important step in setting up the simulations on the cluster. 
 
 #### Setting up a CMSSW sandbox
-By default, simulations on lxbatch do not have acces to CMSSW code stored locally on lxplus, therefore we need to send them to lxbatch along with the config file, wrapped up in a tar package, which will be automatically unpacked and used on the cluster. To create _sandbox.tar.bz2_, first exit the _CMSSW_11_2_0_pre6_ folder and create a temporary directory
+By default, simulations on lxbatch do not have access to CMSSW code stored locally on lxplus, therefore we need to send them to lxbatch along with the config file, wrapped up in a tar package, which will be automatically unpacked and used on the cluster. To create _sandbox.tar.bz2_, first exit the _CMSSW_11_2_0_pre6_ folder and create a temporary directory.
 ```sh
 cd ../../
 mkdir temp
