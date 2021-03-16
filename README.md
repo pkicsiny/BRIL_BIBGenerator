@@ -4,7 +4,7 @@ This guide gives instructions on how to set up and run Beam Induced Background (
 For an official introduction and manual for CMSSW please have a look at the offline [workbook](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook).
 
 ## Setup
-### Kickkstart
+### Kickstart
 Generation:
 ```sh
 ssh -Y username@lxplus.cern.ch
