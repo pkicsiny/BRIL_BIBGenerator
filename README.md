@@ -1,7 +1,7 @@
 # BRIL_BIBGenerator
 ## Introduction
 This guide gives instructions on how to set up and run Beam Induced Background (BIB, alternatively MIB for Machine Induced Background) simulations in CMSSW with a two step method (BIB particle generation + simulation).
-For an official introduction and manual for CMSSW have a look at the offline [workbook](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook).
+For an official introduction and manual for CMSSW please have a look at the offline [workbook](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook).
 
 ## Setup
 ### Kickkstart
@@ -166,7 +166,7 @@ cd ../../
 mkdir temp
 cd temp
 ```
-and copy here the full CMSSW_11_2_0_pre6 directory. Now enter the _CMSSW_11_2_0_pre6/src_ and delete everything except _BRIL_BIBGenerator/GeneratorInterface/SimG4Core_ which contains code for handling MIB particles in CMSSW and thus necessary for such simulations. To read more about what is different when simulating MIB particles instead of regular beam collision events, see [here](https://sviret.web.cern.ch/sviret/Images/CMS/MIB/MIB/Welcome.php?n=Work.Prod). Then move _SimG4Core_ back up to the _/src_ directory so that now that is the only content there. Then you will need some code for simulating detector response and digitization, which that can depend on the usecase. In casew of BRIL, simulations were done with having only the tracker geometry. To get the necessary python files for this usecase, get the directory _DataProductionTkOnly_ from [here](https://github.com/pkicsiny/BRIL_ITsim). The easiest (and dirtiest) way is to clone the whole repository and delete everything except the _DataProductionTkOnly_ folder.
+and copy here the full CMSSW_11_2_0_pre6 directory. Now enter the _CMSSW_11_2_0_pre6/src_ and delete everything except _BRIL_BIBGenerator/GeneratorInterface/SimG4Core_ which contains code for handling MIB particles in CMSSW and thus necessary for such simulations. To read more about what is different when simulating MIB particles instead of regular beam collision events, see [here](https://sviret.web.cern.ch/sviret/Images/CMS/MIB/MIB/Welcome.php?n=Work.Prod). Then move _SimG4Core_ back up to the _/src_ directory so that now that is the only content there. Then you will need some code for simulating detector response and digitization, which that can depend on the usecase. In case of BRIL, simulations were done with having only the tracker geometry. To get the necessary python files for this usecase, get the directory _DataProductionTkOnly_ from [here](https://github.com/pkicsiny/BRIL_ITsim). The easiest (and dirtiest) way is to clone the whole repository and delete everything except the _DataProductionTkOnly_ folder.
 ```sh
 git clone https://github.com/pkicsiny/BRIL_ITsim.git
 ```
