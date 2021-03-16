@@ -4,7 +4,7 @@ This guide gives instructions on how to set up and run Beam Induced Background (
 For an official introduction and manual for CMSSW have a look at the offline [workbook](https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBook).
 
 ## Setup
-### Quickstart
+### Kickkstart
 Generation:
 ```sh
 ssh -Y username@lxplus.cern.ch
@@ -152,7 +152,7 @@ In this config file you can change the CMSSW geometry used for the simulation at
 In _runSimTkOnly.sh_, the __INFILE__ parameter (currently at line 30) has to be set to point to the output root file from the generation step (e.g. at _/absolute/path/to/cmssw_test/CMSSW_11_2_0_pre6/src/generator_output/myoutput.root_). The parameter __OUTDIR__ at line 36 should be similarly changed to point to the desired simulation output directory (e.g. to _/absolute/path/to/cmssw_test/CMSSW_11_2_0_pre6/src/simulation_output_). In general, nothing else has to be changed in this file. You can notice that it takes some command line arguments (lines 17-20): <br> 
 __PU__: refers to pileup but it can be ignored for BIB particle simulations. <br>
 __NEVENTS__: number of events to read from the generator step output file and simulate. This parameter is inferred from line 1 of _generatePU.sub_. <br>
-__JOBID__: this can also be ignored. It wil be set automatically on lxbatch and can take a value from 0 to the value of __queue__, which is set in the last line of _generatePU.sub_. The __JOBID__ parameter uniquely identifies each split simulation chunk on the cluster. <br>
+__JOBID__: this can also be ignored. It will be set automatically on lxbatch and can take a value from 0 to the value of __queue__, which is set in the last line of _generatePU.sub_. The __JOBID__ parameter uniquely identifies each split simulation chunk on the cluster. <br>
 At line 100 you can also see:
 ```sh
 tar -xf sandbox.tar.bz2
